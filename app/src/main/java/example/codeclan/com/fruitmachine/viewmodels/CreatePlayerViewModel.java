@@ -1,9 +1,11 @@
 package example.codeclan.com.fruitmachine.viewmodels;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.view.View;
 
+import example.codeclan.com.fruitmachine.activities.HomeActivity;
 import example.codeclan.com.fruitmachine.interfaces.IPlayerProvider;
 import example.codeclan.com.fruitmachine.models.Player;
 
@@ -25,7 +27,15 @@ public class CreatePlayerViewModel extends BaseObservable
 
     public void createPlayer(View view)
     {
-        player.setBank(0);
-        playerProvider.addPlayer(player);
+        if((player.getFirstName() != null && !player.getFirstName().isEmpty())
+            && (player.getLastName() != null && !player.getLastName().isEmpty())
+            && ((player.getEmail() != null) && !player.getEmail().isEmpty()))
+        {
+            playerProvider.addPlayer(player);
+
+            Context context = view.getContext();
+            Intent intent = new Intent(context, HomeActivity.class);
+            context.startActivity(intent);
+        }
     }
 }

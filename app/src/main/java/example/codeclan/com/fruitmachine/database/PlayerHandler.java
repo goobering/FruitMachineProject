@@ -3,7 +3,9 @@ package example.codeclan.com.fruitmachine.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -32,9 +34,26 @@ public class PlayerHandler extends DatabaseHandler implements IPlayerProvider
         values.put(PlayerDb.COL_EMAIL.toString(), player.getEmail());
         values.put(PlayerDb.COL_BANK.toString(), player.getBank());
 
-        // db.insert returns the id of last inserted row
-        int id = (int) db.insert(PlayerDb.TABLE_PLAYERS.toString(), null, values);
-        db.close();
+        int id = -1;
+
+        try
+        {
+            // db.insertOrThrow returns the id of last inserted row, or throws exception if something went wrong
+            id = (int) db.insertOrThrow(PlayerDb.TABLE_PLAYERS.toString(), null, values);
+        }
+        catch(SQLException ex)
+        {
+            Log.e("PlayerHandler", "exception", ex);
+            throw ex;
+        }
+        finally
+        {
+            if(db.isOpen())
+            {
+                db.close();
+            }
+        }
+
         return id;
     }
 
@@ -100,10 +119,11 @@ public class PlayerHandler extends DatabaseHandler implements IPlayerProvider
         db.update(PlayerDb.TABLE_PLAYERS.getName(), contentValues, "id=" + id, null);
     }
 
-    public void deletePlayer(Player player) {
+    public int deletePlayer(Player player) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(PlayerDb.TABLE_PLAYERS.toString(), PlayerDb.COL_ID.toString() + " = ?",
+        int numRowsAffected = db.delete(PlayerDb.TABLE_PLAYERS.toString(), PlayerDb.COL_ID.toString() + " = ?",
                 new String[] { String.valueOf(player.getId()) });
         db.close();
+        return numRowsAffected;
     }
 }

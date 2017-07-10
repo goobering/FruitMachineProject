@@ -1,11 +1,15 @@
 package example.codeclan.com.fruitmachine.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ import example.codeclan.com.fruitmachine.helpers.DrawableHelper;
 import example.codeclan.com.fruitmachine.models.Symbol;
 import example.codeclan.com.fruitmachine.viewmodels.HomeViewModel;
 
-public class MainActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel(new HomeViewModel(new PlayerHandler(this)));
+
+
 
         //Everything south of here really should go somewhere else - need something that runs once after install
         String[] defaultImages = new String[]{

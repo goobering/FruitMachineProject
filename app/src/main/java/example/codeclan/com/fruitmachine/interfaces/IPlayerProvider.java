@@ -14,5 +14,5 @@ public interface IPlayerProvider
     Player getPlayer(int id);
     ArrayList<Player> getAllPlayers();
     void updatePlayer(int id, String firstName, String lastName, String email, int bank);
-    void deletePlayer(Player player);
+    int deletePlayer(Player player);
 }
