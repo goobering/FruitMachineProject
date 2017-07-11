@@ -29,7 +29,7 @@ public class HomeViewModel extends ViewModel
     //By using an interface I'm decoupling the DB data provider from a concrete implementation - better for testing!
     private final IPlayerProvider playerProvider;
 
-    //Stores my list of available players
+    //Stores a list of available players
     public ObservableList<PlayerItemViewModel> players = new ObservableArrayList<PlayerItemViewModel>();
 
     //Binds an instance of Player to its layout for showing in a ListView
@@ -38,7 +38,7 @@ public class HomeViewModel extends ViewModel
     //Tracks the Player selected in the ListView
     public PlayerItemViewModel selectedPlayerItem = null;
 
-    //Used to enable/disable buttons
+    //Used to enable/disable Create Player/Confirm Player buttons
     public ObservableBoolean isPlayerSelected = new ObservableBoolean(false);
 
     public HomeViewModel(IPlayerProvider playerProvider)
@@ -72,7 +72,7 @@ public class HomeViewModel extends ViewModel
     }
 
     //Takes us to the Game view
-    public void showGame(View view)
+    public void showFruitMachine(View view)
     {
         Context context = view.getContext();
         Intent intent = new Intent(context, FruitMachineActivity.class);

@@ -4,7 +4,7 @@ package example.codeclan.com.fruitmachine.models;
  * Created by user on 07/07/2017.
  */
 
-public class Game
+public abstract class Game
 {
     private String name;
     private int playerId;

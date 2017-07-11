@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="example.codeclan.com.fruitmachine.viewmodels.PlayFruitMachineViewModel"/>
+
+        <variable
+            name="reelStrip"
+            type="example.codeclan.com.fruitmachine.viewmodels.ReelStripViewModel"/>
+
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <example.codeclan.com.fruitmachine.controls.ScrollDisabledListView
+            android:scrollbars="none"
+            android:id="@+id/listSymbols"
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            app:itemBinding="@{reelStrip.symbolItemBinding}"
+            app:items="@{reelStrip.symbolItems}"
+            app:layout_constraintBottom_toTopOf="@+id/btnNudge"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btnNudge"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="N"
+            app:layout_constraintBottom_toTopOf="@+id/btnHold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listSymbols"
+            tools:text="Nudge"
+            />
+
+        <Button
+            android:id="@+id/btnHold"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="H"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNudge"
+            tools:text="Hold"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

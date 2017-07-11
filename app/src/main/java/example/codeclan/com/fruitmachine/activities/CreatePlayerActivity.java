@@ -11,7 +11,6 @@ import example.codeclan.com.fruitmachine.viewmodels.CreatePlayerViewModel;
 
 public class CreatePlayerActivity extends AppCompatActivity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

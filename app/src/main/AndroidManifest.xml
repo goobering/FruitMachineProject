@@ -22,7 +22,9 @@
             android:name=".activities.CreatePlayerActivity"
             android:parentActivityName=".activities.HomeActivity">
         </activity>
-        <activity android:name=".activities.FruitMachineActivity">
+        <activity
+            android:name=".activities.FruitMachineActivity"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
     </application>
 

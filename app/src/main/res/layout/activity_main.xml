@@ -41,7 +41,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/listPlayers"
-            android:enabled="@{viewModel.isPlayerSelected}"/>
+            android:enabled="@{viewModel.isPlayerSelected}"
+            android:onClick="@{viewModel::showFruitMachine}"/>
 
         <Button
             android:id="@+id/btnCreatePlayer"
