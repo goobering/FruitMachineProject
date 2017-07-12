@@ -6,22 +6,22 @@ import android.os.Bundle;
 
 import example.codeclan.com.fruitmachine.R;
 import example.codeclan.com.fruitmachine.database.PlayerHandler;
-import example.codeclan.com.fruitmachine.database.SymbolHandler;
-import example.codeclan.com.fruitmachine.databinding.ActivityFruitMachineBinding;
+import example.codeclan.com.fruitmachine.databinding.ActivityAddCashBinding;
+import example.codeclan.com.fruitmachine.viewmodels.AddCashViewModel;
 import example.codeclan.com.fruitmachine.viewmodels.FruitMachineViewModel;
 
-public class FruitMachineActivity extends AppCompatActivity
+public class AddCashActivity extends AppCompatActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fruit_machine);
+        setContentView(R.layout.activity_add_cash);
 
         int playerId = getIntent().getIntExtra("PLAYER_ID", -1);
 
-        ActivityFruitMachineBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_fruit_machine);
-        binding.setViewModel(new FruitMachineViewModel(new PlayerHandler(this), new SymbolHandler(this), playerId));
+        ActivityAddCashBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_cash);
+        binding.setAddCashViewModel(new AddCashViewModel(new PlayerHandler(this), playerId));
     }
 }

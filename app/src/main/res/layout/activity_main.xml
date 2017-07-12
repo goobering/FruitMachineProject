@@ -4,8 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="example.codeclan.com.fruitmachine.R" />
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="example.codeclan.com.fruitmachine.R"/>
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
+
         <variable
             name="viewModel"
             type="example.codeclan.com.fruitmachine.viewmodels.HomeViewModel"/>
@@ -24,12 +27,12 @@
             android:choiceMode="singleChoice"
             android:listSelector="#888888"
             android:onItemClickListener="@{viewModel::onItemClick}"
+            app:itemBinding="@{viewModel.playerBinding}"
+            app:items="@{viewModel.players}"
             app:layout_constraintBottom_toTopOf="@+id/btnConfirmPlayer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:items="@{viewModel.players}"
-            app:itemBinding="@{viewModel.playerBinding}">
+            app:layout_constraintTop_toTopOf="parent">
         </ListView>
 
         <Button
@@ -37,12 +40,12 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:enabled="@{viewModel.isPlayerSelected}"
+            android:onClick="@{viewModel::showFruitMachine}"
             android:text="OK"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listPlayers"
-            android:enabled="@{viewModel.isPlayerSelected}"
-            android:onClick="@{viewModel::showFruitMachine}"/>
+            app:layout_constraintTop_toBottomOf="@+id/listPlayers"/>
 
         <Button
             android:id="@+id/btnCreatePlayer"
@@ -61,11 +64,22 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:enabled="@{viewModel.isPlayerSelected}"
+            android:onClick="@{viewModel::deletePlayer}"
             android:text="Delete player"
             app:layout_constraintLeft_toRightOf="@+id/listPlayers"
-            app:layout_constraintTop_toBottomOf="@+id/btnCreatePlayer"
+            app:layout_constraintTop_toBottomOf="@+id/btnCreatePlayer"/>
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:enabled="@{viewModel.isPlayerSelected}"
-            android:onClick="@{viewModel::deletePlayer}"/>
+            android:onClick="@{viewModel::showAddCash}"
+            android:text="Add cash"
+            app:layout_constraintLeft_toRightOf="@+id/listPlayers"
+            app:layout_constraintTop_toBottomOf="@+id/btnDeletePlayer"
+            />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

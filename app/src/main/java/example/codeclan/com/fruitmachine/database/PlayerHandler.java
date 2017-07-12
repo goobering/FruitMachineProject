@@ -116,7 +116,7 @@ public class PlayerHandler extends DatabaseHandler implements IPlayerProvider
         contentValues.put(PlayerDb.COL_BANK.toString(), bank);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        db.update(PlayerDb.TABLE_PLAYERS.getName(), contentValues, "id=" + id, null);
+        db.update(PlayerDb.TABLE_PLAYERS.toString(), contentValues, "id=" + id, null);
     }
 
     public int deletePlayer(Player player) {

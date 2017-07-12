@@ -41,8 +41,13 @@ public class PlayerItemViewModel extends BaseObservable
         return player.getEmail();
     }
 
-    public String getBank()
+    public int getBank()
     {
-        return String.valueOf(player.getBank());
+        return player.getBank();
+    }
+
+    public void setBank(int amount)
+    {
+        player.setBank(amount);
     }
 }

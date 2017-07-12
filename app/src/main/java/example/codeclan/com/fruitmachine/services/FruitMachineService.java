@@ -1,8 +1,10 @@
 package example.codeclan.com.fruitmachine.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import example.codeclan.com.fruitmachine.viewmodels.ReelStripViewModel;
+import example.codeclan.com.fruitmachine.viewmodels.SymbolItemViewModel;
 
 /**
  * Created by user on 11/07/2017.
@@ -10,11 +12,8 @@ import example.codeclan.com.fruitmachine.viewmodels.ReelStripViewModel;
 
 public class FruitMachineService
 {
-    public static void nudgeReels(ArrayList<ReelStripViewModel> reelStripList)
+    public static void nudgeReel(ReelStripViewModel reelStrip)
     {
-        for(ReelStripViewModel reelStrip : reelStripList)
-        {
-
-        }
+        Collections.rotate(reelStrip.symbols, 1);
     }
 }

@@ -26,6 +26,10 @@
             android:name=".activities.FruitMachineActivity"
             android:parentActivityName=".activities.HomeActivity">
         </activity>
+        <activity
+            android:name=".activities.AddCashActivity"
+            android:parentActivityName=".activities.HomeActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -7,10 +7,12 @@
 
         <variable
             name="viewModel"
-            type="example.codeclan.com.fruitmachine.viewmodels.PlayFruitMachineViewModel"/>
+            type="example.codeclan.com.fruitmachine.viewmodels.FruitMachineViewModel"/>
 
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
-        <import type="android.support.v7.widget.LinearLayoutManager" />
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
+
+        <import type="android.support.v7.widget.LinearLayoutManager"/>
+        <import type="android.view.View" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -20,45 +22,52 @@
         tools:context="example.codeclan.com.fruitmachine.activities.FruitMachineActivity">
 
         <TextView
-            android:id="@+id/txtPlayerName"
+            android:id="@+id/txtWonMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.player.firstName}"
+            android:layout_margin="8dp"
+            android:visibility="@{viewModel.hasWon ? View.VISIBLE : View.GONE}"
+            android:text="@{@string/win_message(viewModel.lastScore)}"
             app:layout_constraintBottom_toTopOf="@+id/horizontalRecyclerView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/txtPlayerBank"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Dave"/>
 
         <TextView
-            android:id="@+id/txtPlayerBank"
+            android:id="@+id/txtPlayerNameBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.player.bank}"
+            android:layout_margin="8dp"
+            android:text="@{@string/player_and_bank(viewModel.player.firstName, viewModel.player.bank)}"
             app:layout_constraintBottom_toTopOf="@+id/horizontalRecyclerView"
-            app:layout_constraintLeft_toRightOf="@+id/txtPlayerName"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="200 credits"/>
+            app:layout_constraintTop_toBottomOf="@+id/txtWonMessage"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Dave"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/horizontalRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:background="#fff"
-            app:items="@{viewModel.reelStrips}"
             app:itemBinding="@{viewModel.reelStripBinding}"
+            app:items="@{viewModel.reelStrips}"
             app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, false)}"
-            app:adapter="@{viewModel.adapter}"
             app:layout_constraintBottom_toTopOf="@+id/btnSpin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPlayerBank"/>
+            app:layout_constraintTop_toBottomOf="@+id/txtPlayerNameBank"/>
 
         <Button
             android:id="@+id/btnSpin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{viewModel::startTurn}"
             android:text="Spin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -69,16 +78,21 @@
             android:id="@+id/txtNudgeCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@{@string/nudges_text(viewModel.nudges)}"
             app:layout_constraintBottom_toTopOf="@+id/txtHoldCount"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/btnSpin"
             app:layout_constraintTop_toBottomOf="@+id/horizontalRecyclerView"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="5 nudges"/>
 
         <TextView
             android:id="@+id/txtHoldCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@{@string/holds_text(viewModel.holds)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/btnSpin"

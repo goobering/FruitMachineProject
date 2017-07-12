@@ -1,9 +1,11 @@
 package example.codeclan.com.fruitmachine.adapters;
 
+import android.databinding.BindingAdapter;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 

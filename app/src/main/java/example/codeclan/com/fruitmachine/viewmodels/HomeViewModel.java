@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 
 import example.codeclan.com.fruitmachine.R;
 import example.codeclan.com.fruitmachine.BR;
+import example.codeclan.com.fruitmachine.activities.AddCashActivity;
 import example.codeclan.com.fruitmachine.activities.CreatePlayerActivity;
 import example.codeclan.com.fruitmachine.activities.FruitMachineActivity;
 import example.codeclan.com.fruitmachine.interfaces.IPlayerProvider;
@@ -26,6 +29,8 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class HomeViewModel extends ViewModel
 {
+    public final ObservableInt itemPosition = new ObservableInt();
+
     //By using an interface I'm decoupling the DB data provider from a concrete implementation - better for testing!
     private final IPlayerProvider playerProvider;
 
@@ -36,7 +41,7 @@ public class HomeViewModel extends ViewModel
     public ItemBinding<Player> playerBinding = ItemBinding.of(BR.player, R.layout.item_player);
 
     //Tracks the Player selected in the ListView
-    public PlayerItemViewModel selectedPlayerItem = null;
+    public ObservableField<PlayerItemViewModel> selectedPlayerItem = new ObservableField<PlayerItemViewModel>();
 
     //Used to enable/disable Create Player/Confirm Player buttons
     public ObservableBoolean isPlayerSelected = new ObservableBoolean(false);
@@ -76,6 +81,16 @@ public class HomeViewModel extends ViewModel
     {
         Context context = view.getContext();
         Intent intent = new Intent(context, FruitMachineActivity.class);
+        intent.putExtra("PLAYER_ID", selectedPlayerItem.get().getId());
+        context.startActivity(intent);
+    }
+
+    //Takes us to the add cash view
+    public void showAddCash(View view)
+    {
+        Context context = view.getContext();
+        Intent intent = new Intent(context, AddCashActivity.class);
+        intent.putExtra("PLAYER_ID", selectedPlayerItem.get().getId());
         context.startActivity(intent);
     }
 
@@ -83,7 +98,7 @@ public class HomeViewModel extends ViewModel
     //Bit smelly - ideally shouldn't be quite so tight to View
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        selectedPlayerItem = (PlayerItemViewModel) parent.getAdapter().getItem(position);
+        selectedPlayerItem.set((PlayerItemViewModel) parent.getAdapter().getItem(position));
         isPlayerSelected.set(true);
     }
 
@@ -91,7 +106,7 @@ public class HomeViewModel extends ViewModel
     //If sucessful deletes from list
     public void deletePlayer(View view)
     {
-        Player playerToDelete = playerProvider.getPlayer(selectedPlayerItem.getId());
+        Player playerToDelete = playerProvider.getPlayer(selectedPlayerItem.get().getId());
         if (playerProvider.deletePlayer(playerToDelete) > 0)
         {
             players.remove(selectedPlayerItem);
