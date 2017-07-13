@@ -34,14 +34,15 @@ public class ReelStripViewModel extends BaseObservable
     public final ObservableArrayList<SymbolItemViewModel> symbols = new ObservableArrayList<SymbolItemViewModel>();
     public final ObservableBoolean holdsEnabled = new ObservableBoolean(false);
     public final ObservableBoolean nudgesEnabled = new ObservableBoolean(false);
-    public int nudgeCount = 0;
-    public int holdCount = 0;
+
+    private FruitMachineViewModel fruitMachineViewModel;
 
     public ItemBinding<SymbolItemViewModel> symbolItemBinding = ItemBinding.of(BR.symbol, R.layout.item_symbol);
 
-    public ReelStripViewModel(Reel reel)
+    public ReelStripViewModel(Reel reel, FruitMachineViewModel fruitMachineViewModel)
     {
         this.reel = reel;
+        this.fruitMachineViewModel = fruitMachineViewModel;
         cloneSymbols();
     }
 
@@ -61,15 +62,26 @@ public class ReelStripViewModel extends BaseObservable
 
     public void nudgeReel(View view)
     {
-        nudgeCount++;
-        canNudge.set(false);
         FruitMachineService.nudgeReel(this);
+        fruitMachineViewModel.nudges.set(fruitMachineViewModel.nudges.get() - 1);
+        if(fruitMachineViewModel.nudges.get() == 0)
+        {
+            fruitMachineViewModel.hasNudges.set(false);
+            fruitMachineViewModel.setNudgesFalse();
+        }
     }
 
     public void setHold(View view)
     {
-        holdCount++;
         markedForHold.set(!markedForHold.get());
         canHold.set(false);
+        fruitMachineViewModel.holds.set(fruitMachineViewModel.holds.get() - 1);
+        fruitMachineViewModel.numHeldReels.set(fruitMachineViewModel.numHeldReels.get() + 1);
+
+        if(fruitMachineViewModel.holds.get() == 0)
+        {
+            fruitMachineViewModel.hasHolds.set(false);
+            fruitMachineViewModel.setHoldsFalse();
+        }
     }
 }

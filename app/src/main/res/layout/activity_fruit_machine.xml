@@ -12,7 +12,8 @@
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
 
         <import type="android.support.v7.widget.LinearLayoutManager"/>
-        <import type="android.view.View" />
+
+        <import type="android.view.View"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -22,13 +23,14 @@
         tools:context="example.codeclan.com.fruitmachine.activities.FruitMachineActivity">
 
         <TextView
-            android:id="@+id/txtWonMessage"
+            android:id="@+id/txtLostMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:visibility="@{viewModel.hasWon ? View.VISIBLE : View.GONE}"
-            android:text="@{@string/win_message(viewModel.lastScore)}"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalRecyclerView"
+            android:paddingTop="12dp"
+            android:text="@{@string/lost_message}"
+            android:visibility="@{viewModel.hasLost ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/txtWonMessage"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,16 +38,41 @@
             tools:text="Dave"/>
 
         <TextView
+            android:id="@+id/txtWonMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@{@string/win_message(viewModel.lastScore)}"
+            android:visibility="@{viewModel.hasWon ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/txtPlayerNameBank"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Dave"/>
+
+        <TextView
+            android:id="@+id/txtBrokeMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@{@string/broke_message}"
+            android:visibility="@{viewModel.isPlayerBroke ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/txtPlayerNameBank"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtWonMessage"
+            tools:text="Dave"/>
+
+        <TextView
             android:id="@+id/txtPlayerNameBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@{@string/player_and_bank(viewModel.player.firstName, viewModel.player.bank)}"
+            android:text="@{@string/player_and_bank(viewModel.player.firstName, viewModel.playerBank)}"
             app:layout_constraintBottom_toTopOf="@+id/horizontalRecyclerView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtWonMessage"
-            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Dave"/>
 
         <android.support.v7.widget.RecyclerView
@@ -57,7 +84,6 @@
             app:itemBinding="@{viewModel.reelStripBinding}"
             app:items="@{viewModel.reelStrips}"
             app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, false)}"
-            app:layout_constraintBottom_toTopOf="@+id/btnSpin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPlayerNameBank"/>
@@ -67,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:enabled="@{viewModel.canSpin}"
             android:onClick="@{viewModel::startTurn}"
             android:text="Spin"
             app:layout_constraintBottom_toBottomOf="parent"

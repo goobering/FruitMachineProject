@@ -4,4 +4,6 @@
     <string name="holds_text">Holds: %d</string>
     <string name="player_and_bank">%1$s : %2$d</string>
     <string name="win_message">You won %1$d credits. Spin again!</string>
+    <string name="lost_message">You lost!</string>
+    <string name="broke_message">You\'re broke!</string>
 </resources>

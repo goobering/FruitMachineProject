@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class NumberHelpers
 {
-    public static void setObservableBooleanOverZero(ObservableBoolean bool, ObservableInt number)
+    public static void setObservableBooleanIfIntOverZero(ObservableBoolean bool, ObservableInt number)
     {
         if(number.get() > 0)
         {
@@ -23,7 +23,7 @@ public class NumberHelpers
         }
     }
 
-    public static void setRandomObservableInt(ObservableInt number)
+    public static void setObservableIntToRandom(ObservableInt number)
     {
         Random rand = new Random();
         number.set(rand.nextInt(4));
